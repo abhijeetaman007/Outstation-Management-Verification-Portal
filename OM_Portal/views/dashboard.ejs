@@ -1,0 +1,10 @@
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%=name %></p>
+<!-- <p class="lead mb-3">Status <%=status %></p> -->
+<% if(status) {%>
+ <p class="lead mb-3">Your details have been verified </p> 
+<% } else { %>
+ <p class="lead mb-3">Your not verified </p> 
+ <% } %>
+ <p class="mb-3"></p>
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
