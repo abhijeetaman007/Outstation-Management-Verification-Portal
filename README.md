@@ -11,6 +11,6 @@ Username: admin@gmail.com
 Password: password
 
 ## Setting up project
-npm start (To start server)
+``npm start`` (To start server)
 
-open http://localhost:5000/ (To view homepage)
+Open http://localhost:5000/ (To view homepage)
