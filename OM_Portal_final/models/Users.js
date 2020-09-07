@@ -23,7 +23,12 @@ const UserSchema=new mongoose.Schema({
     date:{
         type:Date,
         default:Date.now
-    }
+    },
+    college:{
+        type:String,
+        required:true,
+        default:"Manipal Institute of Technology"
+    }   
 
 })
 

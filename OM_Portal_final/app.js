@@ -4,10 +4,16 @@ const mongoose = require('mongoose');
 const flash=require('connect-flash')
 const session=require('express-session');
 const passport = require('passport');
+var cors = require('cors')
+
 
 
 const app=express()
 const PORT= process.env.PORT || 5000
+
+
+app.use(cors())
+
 
 //Passport Config
 require('./config/passport')(passport)
@@ -23,7 +29,7 @@ mongoose.connect(db,{useNewUrlParser:true,useUnifiedTopology: true })
 
 //EJS
 app.use(expressLayouts);
-app.set('view engine','ejs')
+ app.set('view engine','ejs')
 
 //BodyParser
 app.use(express.urlencoded({extended:false}))   //Body Parser is a part of express no need to explicitly install

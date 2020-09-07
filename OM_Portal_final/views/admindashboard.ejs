@@ -1,0 +1,39 @@
+
+<h1 class="mt-4" style='text-align: center;'>Admin Dashboard</h1>
+<p class="lead mb-3" style='text-align: center;'>Welcome Admin</p>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style>
+    .usercontainer{
+        background-color: blanchedalmond;
+        margin: 16px;
+        padding: 16px;
+        border-radius: 5px;
+        border:solid 1px rgb(199,199,199)
+    }
+</style>
+<script>
+    async function handleupdatestatus(e){
+        console.log("Updating Status")
+        console.log(e.target.id)
+        //PUT request
+        const url='/users/update/'+e.target.id
+        const res=await axios.patch(url,{status:true})
+        // res.json()
+        console.log(res)
+    }
+</script>
+<ul>
+    <% users.forEach(function(item){ %>
+        <div class=usercontainer>
+            <strong> <%=item.name%></strong>
+            <div>
+                <div><strong>Email ID</strong> <%=item.email%></div>
+                <div><strong>College</strong> <%=item.college%></div>
+                <div><strong>Validation Status</strong> <%=item.status%>     <button  class="btn btn-secondary btn-sm" id='<%=item._id%>'  onclick="handleupdatestatus(event)">Change Status</button></div> 
+                <div><strong>Date of Registration</strong> <%=item.date%></div>
+            </div>        
+        </div>
+    <% }); %>
+  </ul>  
+
+<div style="align-content: center; text-align: center; margin-bottom: 25px;"><a href="/users/logout" class="btn btn-secondary" >Logout</a></div>

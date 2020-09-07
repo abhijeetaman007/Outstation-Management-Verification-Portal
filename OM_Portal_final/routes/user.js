@@ -5,7 +5,7 @@ const passport=require('passport')
 
 
 //User Model
-const User=require('../models/Users')  //we are importing user model such that we can use methods like find save update delete etc
+const User=require('../models/Users') 
 
 //Login Page
 router.get('/login',(req,res)=>res.render('login'))
@@ -17,11 +17,11 @@ router.get('/register',(req,res)=>res.render('register'))
 router.post('/register',(req,res)=>{
     // console.log(req.body)
     // res.send("hello")
-    const {name,email,password,password2}=req.body;
+    const {name,email,password,password2,college}=req.body;
     let errors=[]                                        //we are using an errors array to store different error message which can occur while registering
 
     //check required fields
-    if(!name||!email||!password||!password2)
+    if(!name||!email||!password||!password2||!college)
     errors.push({msg:"Please fill all fields"})
 
     //checking password match password and confirm password
@@ -40,7 +40,8 @@ router.post('/register',(req,res)=>{
             name,
             email,
             password,
-            password2
+            password2,
+            college
         })
     }
     else{
@@ -58,7 +59,8 @@ router.post('/register',(req,res)=>{
                     name,
                     email,
                     password,
-                    password2
+                    password2,
+                    college
                 })
             }
             else{
@@ -66,13 +68,14 @@ router.post('/register',(req,res)=>{
                 const newUser= new User({   //Here we creating a new instance of user but not saving to DB
                     name,           //Here in ES6 it is same to have name:name as name
                     email,
-                    password
+                    password,
+                    college
                 }) 
                 // console.log(newUser)
                 // res.send('hello')
 
                 //Hash Password
-                bcrypt.genSalt(10,(err,salt)=>                 //Here using gensalt of bcrypt we are genrating a salt which is used further in hashinf 
+                bcrypt.genSalt(10,(err,salt)=>                 //Here using gensalt of bcrypt we are genrating a salt which is used further in hashing 
 
                  bcrypt.hash(newUser.password,salt,(error,hash)=>{
                     if(error) throw error;
@@ -100,6 +103,7 @@ router.post('/login',(req,res,next)=>{
             User.findOne({email:req.body.email})
             .then(user=>{
                 console.log(user.role)
+                console.log(user.name)
             if(user.role=="Admin")     //Checking if Admin
             {
                 passport.authenticate('local',{
@@ -128,6 +132,37 @@ router.get('/logout',(req,res)=>{
     req.logout()
     req.flash('success_message',"You are logged out")
     res.redirect('/users/login')
+})
+
+//Status Update
+router.patch('/update/:id',(req,res)=>{
+    var id=req.params.id
+    User.findOne({_id:id},function(err,found){
+        if(err)
+        {
+            console.log(err)
+            res.status(500).send()
+        }
+        else{
+            if(!found)
+            res.status(404).send()
+            else
+            {
+                console.log("present : "+found.status)
+                found.status=!found.status
+                found.save((err,updated)=>{
+                    if(err)
+                    res.status(500).send()
+                    else
+                    {
+                        res.send(updated)
+                    }
+                })
+            }         
+        }
+    })
+
+    
 })
 
 module.exports=router
