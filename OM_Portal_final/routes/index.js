@@ -14,13 +14,6 @@ router.get('/users/dashboard',ensureAuthenticated,(req,res)=>res.render('dashboa
 //Admin Dashboard
 router.get('/users/admindashboard',ensureAuthenticated,(req,res)=>{
     console.log(req.user.name)
-    // User.find({name:'Abhijeet Sinha'})
-    // .then(user=>console.log("email is"+user.email))
-    // let users=[{'name':'aman'},{'name':'fsjd'}]
-    // User.find({}).toArray()((err,docs)=>{
-    //     assert.equal(err,null)
-    //     res.render('admindashboard',{'users':docs})
-    // })
     mongoose.model("User").find((err,users)=>{
         if(err) throw err
         else
