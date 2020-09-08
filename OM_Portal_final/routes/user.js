@@ -35,7 +35,7 @@ router.post('/register',(req,res)=>{
 
     if(errors.length>0)
     {
-        res.render('register',{        //When we are using template engines like ejs we can always send something back so here we are sending errors(to show errors) and email,name,passwords(to not empty the form)
+        res.render('register',{        
             errors,
             name,
             email,
@@ -45,8 +45,6 @@ router.post('/register',(req,res)=>{
         })
     }
     else{
-        // res.send('pass')
-
         //Validation passed
         User.findOne({email:email})
         .then(user=>{
@@ -65,15 +63,13 @@ router.post('/register',(req,res)=>{
             }
             else{
                 //We reach here when all fields of form are filled and no same user id exists--so now we encrypt the password and create new user 
-                const newUser= new User({   //Here we creating a new instance of user but not saving to DB
-                    name,           //Here in ES6 it is same to have name:name as name
+                const newUser= new User({  
+                    name,           
                     email,
                     password,
                     college
                 }) 
-                // console.log(newUser)
-                // res.send('hello')
-
+                
                 //Hash Password
                 bcrypt.genSalt(10,(err,salt)=>                 //Here using gensalt of bcrypt we are genrating a salt which is used further in hashing 
 
@@ -134,7 +130,7 @@ router.get('/logout',(req,res)=>{
     res.redirect('/users/login')
 })
 
-//Status Update
+//Verification Status Update(By Admin)
 router.patch('/update/:id',(req,res)=>{
     var id=req.params.id
     User.findOne({_id:id},function(err,found){
