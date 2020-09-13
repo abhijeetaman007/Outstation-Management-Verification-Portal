@@ -15,6 +15,7 @@ Password: password
 *Min 6 characters required for password
 
 ## Setting up project
+In OM_Portal_final dir.
 ``npm start`` (To start server)
 
 Open http://localhost:5000/ (To view homepage)
