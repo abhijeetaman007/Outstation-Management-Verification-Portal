@@ -4,9 +4,10 @@ const {ensureAuthenticated}=require('../config/auth')
 const User=require('../models/Users') 
 const mongoose  = require('mongoose')
 
-//Welcome page
+// //Welcome page
 router.get('/',(req,res)=>res.render('welcome'))
-//Dashboard
+
+//Dashboard and Welcome Page
 router.get('/users/dashboard',ensureAuthenticated,(req,res)=>res.render('dashboard',{
     name:req.user.name,
     status:req.user.status

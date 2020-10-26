@@ -12,26 +12,62 @@
     }
 </style>
 <script>
-    async function handleupdatestatus(e){
+    async function handleupdatestatusverify(e){
         console.log("Updating Status")
-        console.log(e.target.id)
+        console.log("id is " +e.target.id)
         //PUT request
-        const url='/users/update/'+e.target.id
-        const res=await axios.patch(url,{status:true})
+        console.log(e.target.name);
+        if(e.target.name=="accept")
+        {
+            // const data={verified:'VERIFIED'}
+        const url='/users/update/verify/'+Number (e.target.id)
+            const res=await axios.put(url,{
+                verified:'VERIFIED'
+            })
+            alert ("Verification Status updated for "+res.data.name+" to "+res.data.verified);
+            console.log(res)
+        }
+        else
+        {
+            const url='/users/update/reject/'+Number (e.target.id)
+            const res=await axios.put(url,{verified:'REJECTED'})
+            alert ("Verification Status updated for "+res.data.name+" to "+res.data.verified);
+        }
+        // const url='/users/update/'+Number (e.target.id)
+        // const res=await axios.patch(url,{verified:'VERIFIED'})
         // res.json()
-        alert ("Validation Status updated for "+res.data.name+" to "+res.data.status);
-        console.log(res)
+        // alert ("Verification Status updated for "+res.data.name+" to "+res.data.verified);
+        // console.log(res)
     }
+    // async function handleupdatestatusreject(e){
+    //     console.log("Updating Status")
+    //     console.log(e.target.id)
+    //     //PUT request
+    //     const url='/users/update/'+e.target.id
+    //     const res=await axios.patch(url,{verified:'REJECTED'})
+    //     // res.json()
+    //     alert ("Validation Status updated for "+res.data.name+" to "+res.data.verified);
+    //     console.log(res)
+    // }
 </script>
 <ul>
     <% users.forEach(function(item){ %>
         <div class=usercontainer>
-            <strong> <%=item.name%></strong>
+            <strong>Name</strong> <%=item.name%>
             <div>
+                <div><strong>User ID</strong> <%=item.userID%></div>
                 <div><strong>Email ID</strong> <%=item.email%></div>
+                <div><strong>Phone Number</strong> <%=item.phoneNo%></div>
+                <div><strong>Branch</strong> <%=item.branch%></div>
                 <div><strong>College</strong> <%=item.college%></div>
-                <div><strong>Validation Status</strong> <%=item.status%>     <button  class="btn btn-secondary btn-sm" id='<%=item._id%>'  onclick="handleupdatestatus(event)">Change Status</button></div> 
-                <div><strong>Date of Registration</strong> <%=item.date%></div>
+                <div><strong>State</strong> <%=item.state%></div>
+                <div><strong>MAHE Student</strong> <%=item.isMahe%></div>
+                <div><strong>Drive Link</strong><a href="<%=item.driveLink%>"> <%=item.driveLink%></a></div>
+                <div><strong>Verification Status</strong> <%=item.verified%>     
+                    <button  class="btn btn-secondary btn-sm" id='<%=item.userID%>' name='accept'  onclick="handleupdatestatusverify(event)">VERIFY</button> 
+                    <button  class="btn btn-secondary btn-sm" id='<%=item.userID%>'  name='reject' onclick="handleupdatestatusverify(event)">REJECT</button>
+                </div> 
+                <div><strong>Date of Registration</strong> <%=item.timeStamp%></div>
             </div>        
         </div>
     <% }); %>
