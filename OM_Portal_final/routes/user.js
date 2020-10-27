@@ -95,15 +95,12 @@ router.get('/login',(req,res)=>res.render('login'))
 
 //Login Handle
 router.post('/login',(req,res,next)=>{
-            console.log(req.body.email)
+
             User.findOne({email:req.body.email})
             .then(user=>{
-                console.log(user.role)
-                // console.log(user.name)
-                // console.log(user)
             if(user.role=="Admin")     //Checking if Admin
             {
-                console.log("Inside Admin")
+                // console.log("Inside Admin")
                 passport.authenticate('local',{
                 
                     successRedirect: './admindashboard',
@@ -113,7 +110,7 @@ router.post('/login',(req,res,next)=>{
             }
             else
             {
-                console.log("Inside User")
+                // console.log("Inside User")
                 passport.authenticate('local',{
                 
                     successRedirect: './dashboard',

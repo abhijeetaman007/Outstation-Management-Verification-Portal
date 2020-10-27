@@ -14,8 +14,8 @@ router.get('/users/dashboard',ensureAuthenticated,(req,res)=>res.render('dashboa
 }))
 //Admin Dashboard
 router.get('/users/admindashboard',ensureAuthenticated,(req,res)=>{
-    console.log(req.user.name)
-    mongoose.model("User").find((err,users)=>{
+    // console.log(req.user.name)
+    mongoose.model("User").find({role:'User'},(err,users)=>{
         if(err) throw err
         else
         {
