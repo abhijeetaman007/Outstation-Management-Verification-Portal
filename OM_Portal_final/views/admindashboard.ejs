@@ -33,6 +33,7 @@
             const res=await axios.put(url,{verified:'REJECTED'})
             alert ("Verification Status updated for "+res.data.name+" to "+res.data.verified);
         }
+        window.location.reload(true);
         // const url='/users/update/'+Number (e.target.id)
         // const res=await axios.patch(url,{verified:'VERIFIED'})
         // res.json()
@@ -63,11 +64,21 @@
                 <div><strong>State</strong> <%=item.state%></div>
                 <div><strong>MAHE Student</strong> <%=item.isMahe%></div>
                 <div><strong>Drive Link</strong><a href="<%=item.driveLink%>"> <%=item.driveLink%></a></div>
-                <div><strong>Verification Status</strong> <%=item.verified%>     
+                <div><strong>Date of Registration</strong> <%=item.timeStamp%></div>
+                <div><strong>Verification Status</strong> 
+                
+                    <% if(item.verified == 'VERIFIED') { %>
+                         <h2 style="color:green"><%=item.verified%>  </h2>   
+                    <%}else if(item.verified == 'REJECTED') {%>
+                        <h2 style="color:red"><%=item.verified%>  </h2>   
+                    <%} else {%>
+                        <h2 style="color:orange"><%=item.verified%>  </h2>   
+                    <%}%>
+            
                     <button  class="btn btn-secondary btn-sm" id='<%=item.userID%>' name='accept'  onclick="handleupdatestatusverify(event)">VERIFY</button> 
                     <button  class="btn btn-secondary btn-sm" id='<%=item.userID%>'  name='reject' onclick="handleupdatestatusverify(event)">REJECT</button>
                 </div> 
-                <div><strong>Date of Registration</strong> <%=item.timeStamp%></div>
+                
             </div>        
         </div>
     <% }); %>
