@@ -98,6 +98,8 @@ router.post('/login',(req,res,next)=>{
 
             User.findOne({email:req.body.email})
             .then(user=>{
+                // console.log(user)
+                if(user!=null){
             if(user.role=="Admin")     //Checking if Admin
             {
                 // console.log("Inside Admin")
@@ -114,6 +116,14 @@ router.post('/login',(req,res,next)=>{
                 passport.authenticate('local',{
                 
                     successRedirect: './dashboard',
+                    failureRedirect:'./login',
+                    failureFlash: true
+                })(req,res,next)
+            }}
+            else
+            {
+                passport.authenticate('local',{
+                
                     failureRedirect:'./login',
                     failureFlash: true
                 })(req,res,next)
