@@ -7,7 +7,7 @@ User can Register and then Login to check whether verified or not.
 Admin can login with following credentials to verify registered user\
 and can also switch verification status to not verified if needed.
 
-Username: admin@gmail.com
+Username: admin@test.com
 
 Password: password
 
@@ -15,7 +15,7 @@ Password: password
 *Min 6 characters required for password
 
 ## Setting up project
-In OM_Portal_final dir.
+``npm install`` (To install dependencies)    
 ``npm start`` (To start server)
 
-Open http://localhost:5000/ (To view homepage)
+Open http://localhost:7000/ (To view homepage)
